@@ -20,9 +20,35 @@ namespace MicrowaveApplicatie
     /// </summary>
     public partial class MainWindow : Window
     {
+        int timer = 0;
         public MainWindow()
         {
+
             InitializeComponent();
+            Label.Content = timer;
+        }
+
+        private void addTen(object sender, MouseButtonEventArgs e)
+        {
+            timer += 600;
+            Label.Content = timer;
+        }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
+
+        private void addOne(object sender, MouseButtonEventArgs e)
+        {
+            timer += 60;
+            Label.Content = timer;
+        }
+
+        private void addHalf(object sender, MouseButtonEventArgs e)
+        {
+            timer += 30;
+            Label.Content = timer;
         }
     }
 }
