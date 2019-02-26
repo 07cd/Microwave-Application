@@ -10,8 +10,22 @@ namespace MicrowaveApplicatie
     class Watt
     {
 
-        public int[] Wattage = {600, 700, 800, 1000, 1200};
+        public Watt(int initialIndex)
+        {
+            index = initialIndex;
+        }
 
+        public int[] wattage = {600, 700, 800, 1000, 1200};
+        
+        public int index { get; set; }
 
+        public int currWatt
+        {
+            get { return currWatt; }
+            set
+            {
+                currWatt = wattage[index];
+            }
+        }
     }
 }

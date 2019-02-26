@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
@@ -23,11 +24,16 @@ namespace MicrowaveApplicatie
     /// </summary>
     public partial class MainWindow : Window
     {
-        Microwave cd07 = new Microwave();
-        int Time = 0;
-        public int index = 0;
-        System.Timers.Timer aTimer = new System.Timers.Timer();
-        Watt watt = new Watt();
+//        Microwave cd07 = new Microwave();
+
+        
+       Timer tests = new Timer(0);
+        
+        Watt watt = new Watt(0);
+
+
+
+
 
 
         public MainWindow()
@@ -35,9 +41,7 @@ namespace MicrowaveApplicatie
 
             InitializeComponent();
 
-            
-            aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
-            aTimer.Interval = 1000;
+          
 
         }
 
@@ -45,119 +49,114 @@ namespace MicrowaveApplicatie
 
 
 
-        private void addTen(object sender, MouseButtonEventArgs e)
-        {
-            Time += 600;
-            Label.Content = Refresh();
-
-        }
-        private void addOne(object sender, MouseButtonEventArgs e)
-        {
-            Time += 60;
-            Label.Content = Refresh();
-        }
-
-        private void addHalf(object sender, MouseButtonEventArgs e)
-        {
-            Time += 30;
-            Label.Content = Refresh();
-        }
+  
 
 
-        private void startTimer(object sender, RoutedEventArgs e)
+        //        private void test()
+        //        {
+        //            var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
+        //            timer.Start();
+        //            timer.Tick += (sender, args) =>
+        //            {
+        //                timer.Stop();
+        //        
+        //            };
+        //        }
+
+
+
+
+
+        private void KeyBindings(object sender, RoutedEventArgs e)
         {
-            aTimer.Start();
-            
-        }
-        private void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
-        {
-            Time--;
-            this.Dispatcher.Invoke(() =>
+            switch (sender.ToString())
             {
-                Label.Content = Refresh();
-            });
-           
-        }
+                case "System.Windows.Controls.Button: Pause":
+                    tests.pauseTimer();
+                    MessageBox.Show(sender.ToString());
+                    break;
+                case "System.Windows.Controls.Button: Start":
+                    tests.startTimer();
+                    MessageBox.Show(sender.ToString());
+                    break;
+                case "System.Windows.Controls.Button: Stop":
+                    tests.StopTimer();
+                    MessageBox.Show(sender.ToString());
+                    break;
+                case "System.Windows.Controls.Button: Open":
+                    MessageBox.Show(sender.ToString());
+                    break;
 
-        public string Refresh()
-        {
-            var timeSpan = TimeSpan.FromSeconds(Time);
-            var result = string.Format("{0:D2}:{1:D2}", (int)timeSpan.TotalMinutes, timeSpan.Seconds);
-            return result;
-        }
 
-        private void stopTimer(object sender, RoutedEventArgs e)
-        {
-            aTimer.Stop();
-            Time = 0;
-            Label.Content = Refresh();
-        }
-        private void pauseTimer(object sender, RoutedEventArgs e)
-        {
-            aTimer.Stop();
-           
-        }
 
-        private void wattDown(object sender, RoutedEventArgs e)
-        {
-            if (index == 0)
-            {
+                case "System.Windows.Controls.Button: >":
+                    if (watt.index == 4)
+                    {
+
+                    }
+                    else
+                    {
+                        watt.index++;
+
+                    }
+
+                    Label.Content = watt.currWatt;
+                    //                    int currentWatt = watt.wattage[watt.index];
+                    //            test();
+
+                    MessageBox.Show(sender.ToString());
+                    break;
+
+                case "System.Windows.Controls.Button: <":
+                    if (watt.index == 0)
+                    {
+
+                    }
+                    else
+                    {
+                        watt.index--;
+                    }
+
+                    Label.Content = watt.currWatt;
+                    
+                    //            test();
+
+                    MessageBox.Show(sender.ToString());
+                    break;
+                case "System.Windows.Controls.Button: +1/2":
+                    tests.Add(30);
+                    Label.Content = tests.TimeString;
+                    
+                    break;
+                case "System.Windows.Controls.Button: +1":
+                    tests.Add(60);
+                    Label.Content = tests.TimeString;
+                    
+                    break;
+                case "System.Windows.Controls.Button: +10":
+                    tests.Add(600);
+                    Label.Content = tests.TimeString;
+                    
+                    break;
+                case "System.Windows.Controls.Button: *":
+                    MessageBox.Show(sender.ToString());
+                    break;
+                default:
+                    MessageBox.Show("Error");
+                    MessageBox.Show(sender.ToString());
+                    break;
+
 
             }
-            else
-            {
-                index--;
-            }
-            Label.Content = watt.Wattage[index];
-            int currentWatt = watt.Wattage[index];
-            test();
-
         }
 
-        private void wattUp(object sender, RoutedEventArgs e)
-        {
-            if (index == 4)
-            {
+     
 
-            }
-            else
-            {
-                index++;
-            }
 
-            Label.Content = watt.Wattage[index];
-            int currentWatt = watt.Wattage[index];
-            test();
+  
 
 
 
-
-        }
-
-        private void test()
-        {
-            var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
-            timer.Start();
-            timer.Tick += (sender, args) =>
-            {
-                timer.Stop();
-                Label.Content = Refresh();
-            };
-        }
-
-
-        private void startBot(object sender, MouseButtonEventArgs e)
-        {
-            MessageBox.Show("Under development");
-        }
-
-
-
-
-        private void openMicrowave(object sender, MouseButtonEventArgs e)
-        {
-            
-        }
 
 
     }
