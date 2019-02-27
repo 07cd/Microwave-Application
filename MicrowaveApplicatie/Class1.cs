@@ -21,11 +21,8 @@ namespace MicrowaveApplicatie
 
         public int currWatt
         {
-            get { return currWatt; }
-            set
-            {
-                currWatt = wattage[index];
-            }
+            get { return wattage[index]; }
+        
         }
     }
 }

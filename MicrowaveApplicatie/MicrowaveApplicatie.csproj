@@ -100,5 +100,19 @@
   <ItemGroup>
     <Resource Include="Assets\microwave.png" />
   </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\0001.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Resource Include="Assets\0023.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="Assets\Close.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="Assets\Open.mp4">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

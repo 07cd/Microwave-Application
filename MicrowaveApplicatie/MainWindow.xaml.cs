@@ -32,7 +32,7 @@ namespace MicrowaveApplicatie
         Watt watt = new Watt(0);
 
 
-
+        
 
 
 
@@ -49,7 +49,7 @@ namespace MicrowaveApplicatie
 
 
 
-  
+
 
 
         //        private void test()
@@ -63,7 +63,7 @@ namespace MicrowaveApplicatie
         //            };
         //        }
 
-
+        int test = 0;
 
 
 
@@ -77,6 +77,8 @@ namespace MicrowaveApplicatie
                     break;
                 case "System.Windows.Controls.Button: Start":
                     tests.startTimer();
+                    //Met een lamp aan + animatie?
+                    Image.Source = new BitmapImage(new Uri(@"Assets/"));
                     MessageBox.Show(sender.ToString());
                     break;
                 case "System.Windows.Controls.Button: Stop":
@@ -84,7 +86,29 @@ namespace MicrowaveApplicatie
                     MessageBox.Show(sender.ToString());
                     break;
                 case "System.Windows.Controls.Button: Open":
-                    MessageBox.Show(sender.ToString());
+                    
+                  
+                    if (test == 0)
+                    {
+                        MediaPlayerClose.Close();
+                       
+                        MediaPlayerOpen.Visibility = Visibility.Visible;
+                        MediaPlayerClose.Visibility = Visibility.Hidden;
+                        MediaPlayerOpen.Play();
+                        test = 1;
+                    
+                    }
+                    else
+                    {
+                        MediaPlayerOpen.Close();
+                      
+                        MediaPlayerOpen.Visibility = Visibility.Hidden;
+                        MediaPlayerClose.Visibility = Visibility.Visible;
+                        MediaPlayerClose.Play();
+                  
+                        test = 0;
+
+                    }
                     break;
 
 

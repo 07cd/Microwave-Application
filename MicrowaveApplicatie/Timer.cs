@@ -18,7 +18,7 @@ namespace MicrowaveApplicatie
             Time = initialTime;
             aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
             aTimer.Interval = 1000;
-            Console.WriteLine("Initialized");
+            
         }
 
         public void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
