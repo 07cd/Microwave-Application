@@ -1,17 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
-using System.Linq;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
-using System.Timers;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
-using System.Windows.Threading;
+using Microsoft.Win32;
 
 namespace MicrowaveApplicatie
 {
@@ -30,7 +23,7 @@ namespace MicrowaveApplicatie
 
         internal static MainWindow Main;
 
-        private ObservableCollection<Dish> dish;
+        private readonly ObservableCollection<Dish> dish;
 
         public MainWindow()
         {
@@ -38,23 +31,20 @@ namespace MicrowaveApplicatie
             InitializeComponent();
             DataContext = this;
             InitializeComponent();
-            dish = new ObservableCollection<Dish>()
+            dish = new ObservableCollection<Dish>
             {
-                new Dish("Koffie", "https://www.kahlua.com/globalassets/images/cocktails/2018/opt/kahluadrinks_wide_coffee1.png", "Test"),
-                new Dish("Burger", "https://frontierburger.com/sites/default/files/styles/large/public/item_photos/2018-07/menuitem-hamburger.png?itok=QZG0Argx", "Test"),
-                new Dish("MicrowaveCeption", "https://thegoodguys.sirv.com/products/50046601/50046601_496424.PNG?scale.height=505&scale.width=773&canvas.height=505&canvas.width=773&canvas.opacity=0&format=png&png.optimize=true","test")
-
+                new Dish("Koffie",
+                    "https://www.kahlua.com/globalassets/images/cocktails/2018/opt/kahluadrinks_wide_coffee1.png",
+                    "Test"),
+                new Dish("Burger",
+                    "https://frontierburger.com/sites/default/files/styles/large/public/item_photos/2018-07/menuitem-hamburger.png?itok=QZG0Argx",
+                    "Test"),
+                new Dish("MicrowaveCeption",
+                    "https://thegoodguys.sirv.com/products/50046601/50046601_496424.PNG?scale.height=505&scale.width=773&canvas.height=505&canvas.width=773&canvas.opacity=0&format=png&png.optimize=true",
+                    "test")
             };
             ComboBox1.ItemsSource = dish;
-
-
-
         }
-
-
-
-
-
 
 
         private async Task test()
@@ -65,7 +55,6 @@ namespace MicrowaveApplicatie
                 _timer.wattState = true;
                 await Task.Delay(1000);
                 _timer.wattState = false;
-
             }
             else
             {
@@ -73,7 +62,6 @@ namespace MicrowaveApplicatie
                 await Task.Delay(1000);
                 Label.Content = _timer.TimeString;
             }
-
         }
 
 
@@ -83,27 +71,24 @@ namespace MicrowaveApplicatie
             {
                 case "System.Windows.Controls.Button: Pause":
                     _timer.pauseTimer();
-                    
+
                     break;
                 case "System.Windows.Controls.Button: Start":
-                    if (!_microwave.state)
-                    {
-                        _timer.startTimer();
-                    }
-                    
+                    if (!_microwave.State) _timer.startTimer();
+
                     //Met een lamp aan + animatie?
                     //Image.Source = new BitmapImage(new Uri(@"Assets/"));
-                    
+
                     break;
                 case "System.Windows.Controls.Button: Stop":
                     _timer.StopTimer();
-                    
+
                     break;
                 case "System.Windows.Controls.Button: Open":
                     _microwave.OpenDoor();
 
                     _timer.pauseTimer();
-                    
+
                     MicrowaveItem.Opacity = 0.8;
                     break;
 
@@ -114,21 +99,15 @@ namespace MicrowaveApplicatie
                     break;
 
                 case "System.Windows.Controls.Button: >":
-                    if (_watt.index != 4)
-                    {
-                        _watt.index++;
-                    }
+                    if (_watt.index != 4) _watt.index++;
 
 
                     test();
-                    
+
                     break;
 
                 case "System.Windows.Controls.Button: <":
-                    if (_watt.index != 0)
-                    {
-                        _watt.index--;
-                    }
+                    if (_watt.index != 0) _watt.index--;
 
 
                     test();
@@ -155,18 +134,16 @@ namespace MicrowaveApplicatie
                 default:
                     MessageBox.Show("Error");
                     break;
-
-
             }
         }
+
         private void AddButton_OnClick(object sender, RoutedEventArgs e)
         {
             var image = Url.Text;
             var time = Tijd.Text;
             var name = Name.Text;
-            
-            dish.Add(new Dish(name, image, time));
 
+            dish.Add(new Dish(name, image, time));
         }
 
 
@@ -178,27 +155,24 @@ namespace MicrowaveApplicatie
         private void SelectFile_OnClick(object sender, RoutedEventArgs e)
         {
             // Create OpenFileDialog 
-            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
-
+            var dlg = new OpenFileDialog();
 
 
             // Set filter for file extension and default file extension 
             dlg.DefaultExt = ".png";
-            dlg.Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif|All Files (*)|*";
+            dlg.Filter =
+                "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif|All Files (*)|*";
 
 
             // Display OpenFileDialog by calling ShowDialog method 
-            Nullable<bool> result = dlg.ShowDialog();
+            var result = dlg.ShowDialog();
 
             if (result == true)
             {
-
                 // Open document
                 Url.Text = dlg.FileName;
-                string filename = dlg.FileName;
-
+                var filename = dlg.FileName;
             }
-
         }
 
         private void ComboBox1_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
@@ -215,13 +189,13 @@ namespace MicrowaveApplicatie
 
         private void InsertButton_OnClick(object sender, RoutedEventArgs e)
         {
-             Name.Clear();
-             Tijd.Clear();
-             Url.Clear();
+            Name.Clear();
+            Tijd.Clear();
+            Url.Clear();
 
-             string URL = dish[ComboBox1.SelectedIndex].URL;
-             MicrowaveItem.Source = new BitmapImage(new Uri(URL));           
-             MicrowaveItem.Opacity = 0.3;
+            var URL = dish[ComboBox1.SelectedIndex].URL;
+            MicrowaveItem.Source = new BitmapImage(new Uri(URL));
+            MicrowaveItem.Opacity = 0.3;
         }
     }
 }
