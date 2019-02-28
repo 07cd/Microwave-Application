@@ -15,13 +15,13 @@ namespace MicrowaveApplicatie
             index = initialIndex;
         }
 
-        public int[] wattage = {600, 700, 800, 1000, 1200};
+        public int[] Wattage = {600, 700, 800, 1000, 1200};
         
         public int index { get; set; }
 
         public int currWatt
         {
-            get { return wattage[index]; }
+            get { return Wattage[index]; }
         
         }
     }

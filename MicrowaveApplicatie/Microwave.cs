@@ -1,25 +1,28 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using System.Timers;
-using System.Windows.Controls;
+﻿using System.Windows;
 
 namespace MicrowaveApplicatie
 {
-
-
-    class Microwave
+    internal class Microwave
     {
 
-        //door controls 
+        public void OpenDoor()
+        {
+            MainWindow.Main.MediaPlayerClose.Close();
+            MainWindow.Main.Label.Content = "OPEN";
+            MainWindow.Main.DoorButton.Content = "Close";
+            MainWindow.Main.MediaPlayerOpen.Visibility = Visibility.Visible;
+            MainWindow.Main.MediaPlayerClose.Visibility = Visibility.Hidden;
+            MainWindow.Main.MediaPlayerOpen.Play();
+        }
 
-
-
-
-
-
+        public void CloseDoor()
+        {
+            MainWindow.Main.MediaPlayerOpen.Close();
+            MainWindow.Main.MediaPlayerOpen.Visibility = Visibility.Hidden;
+            MainWindow.Main.MediaPlayerClose.Visibility = Visibility.Visible;
+            MainWindow.Main.MediaPlayerClose.Play();
+            MainWindow.Main.DoorButton.Content = "Open";
+            MainWindow.Main.Label.Content = "00:00";
+        }
     }
 }

@@ -1,61 +1,54 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
-using System.ComponentModel;
-using System.Runtime.CompilerServices;
-
 
 namespace MicrowaveApplicatie
 {
     /// <summary>
-    /// Interaction logic for MainWindow.xaml
+    ///     Interaction logic for MainWindow.xaml
     /// </summary>
     public partial class MainWindow : Window
     {
 //        Microwave cd07 = new Microwave();
 
+        private readonly Timer _timer = new Timer(0);
+
+        private readonly Watt _watt = new Watt(0);
+
+        private readonly Microwave _microwave = new Microwave();
+
+        internal static MainWindow Main;
+
         
-       Timer tests = new Timer(0);
-        
-        Watt watt = new Watt(0);
 
-
-
-        private ObservableCollection<Dish> person;
 
 
         public MainWindow()
         {
+            Main = this;
+            InitializeComponent();
             DataContext = this;
             InitializeComponent();
             person = new ObservableCollection<Dish>()
             {
-               
-                
+
+
             };
             ComboBox1.ItemsSource = null;
             //            ComboBox1.ItemsSource = Dish.GetAllPersons();
 
+
+
         }
-
-
-        
-
 
 
 
@@ -75,121 +68,86 @@ namespace MicrowaveApplicatie
         //            };
         //        }
 
-        int test = 0;
-
-
 
         private void KeyBindings(object sender, RoutedEventArgs e)
         {
             switch (sender.ToString())
             {
                 case "System.Windows.Controls.Button: Pause":
-                    tests.pauseTimer();
-                    
+                    _timer.pauseTimer();
                     MessageBox.Show(sender.ToString());
                     break;
                 case "System.Windows.Controls.Button: Start":
-                    tests.startTimer();
-                    
+                    _timer.startTimer();
                     //Met een lamp aan + animatie?
                     //Image.Source = new BitmapImage(new Uri(@"Assets/"));
-                    MessageBox.Show(sender.ToString());
+                    
                     break;
                 case "System.Windows.Controls.Button: Stop":
-                    tests.StopTimer();
+                    _timer.StopTimer();
                     
-                    MessageBox.Show(sender.ToString());
                     break;
                 case "System.Windows.Controls.Button: Open":
-                    
-                  
-                    if (test == 0)
-                    {
-                        MediaPlayerClose.Close();
-                       
-                        MediaPlayerOpen.Visibility = Visibility.Visible;
-                        MediaPlayerClose.Visibility = Visibility.Hidden;
-                        MediaPlayerOpen.Play();
-                        test = 1;
-                    
-                    }
-                    else
-                    {
-                        MediaPlayerOpen.Close();
-                      
-                        MediaPlayerOpen.Visibility = Visibility.Hidden;
-                        MediaPlayerClose.Visibility = Visibility.Visible;
-                        MediaPlayerClose.Play();
-                  
-                        test = 0;
-
-                    }
+                    _microwave.OpenDoor();
                     break;
 
-
+                case "System.Windows.Controls.Button: Close":
+                    _microwave.CloseDoor();
+                    break;
 
                 case "System.Windows.Controls.Button: >":
-                    if (watt.index == 4)
+                    if (_watt.index == 4)
                     {
-
                     }
                     else
                     {
-                        watt.index++;
-
+                        _watt.index++;
                     }
 
-                    Label.Content = watt.currWatt;
-                    //                    int currentWatt = watt.wattage[watt.index];
-                    //            test();
+                    Label.Content = _watt.currWatt;
+                    //                    int currentWatt = _watt.Wattage[_watt.index];
+                    //            _test();
 
-                    MessageBox.Show(sender.ToString());
                     break;
 
                 case "System.Windows.Controls.Button: <":
-                    if (watt.index == 0)
+                    if (_watt.index == 0)
                     {
-
                     }
                     else
                     {
-                        watt.index--;
+                        _watt.index--;
                     }
 
-                    Label.Content = watt.currWatt;
-                    
-                    //            test();
+                    Label.Content = _watt.currWatt;
 
-                    MessageBox.Show(sender.ToString());
+                    //            _test();
+
                     break;
                 case "System.Windows.Controls.Button: +1/2":
-                    tests.Add(30);
-                    Label.Content = tests.TimeString;
-                    
+                    _timer.Add(30);
+                    Label.Content = _timer.TimeString;
+
                     break;
                 case "System.Windows.Controls.Button: +1":
-                    tests.Add(60);
-                    Label.Content = tests.TimeString;
-                    
+                    _timer.Add(60);
+                    Label.Content = _timer.TimeString;
+
                     break;
                 case "System.Windows.Controls.Button: +10":
-                    tests.Add(600);
-                    Label.Content = tests.TimeString;
-                    
+                    _timer.Add(600);
+                    Label.Content = _timer.TimeString;
+
                     break;
                 case "System.Windows.Controls.Button: *":
-                    MessageBox.Show(sender.ToString());
                     break;
                 default:
                     MessageBox.Show("Error");
-                    MessageBox.Show(sender.ToString());
                     break;
 
 
             }
         }
-
-
         private void AddButton_OnClick(object sender, RoutedEventArgs e)
         {
             var image = Url.Text;
@@ -197,17 +155,17 @@ namespace MicrowaveApplicatie
             var name = TextBox1.Text;
             ComboBox1.ItemsSource = person;
             person.Add(new Dish(name, image, time));
-//            cbItems.Add(new ComboBoxItem {Content = Test.ToString()});
-//            cbItems.Add(new ComboBoxItem { Content = Test });
-//
-//
-//
-//            var cbItem = new ComboBoxItem { Content = "<--Select-->" };
-//            SelectedcbItem = cbItem;
-//            cbItems.Add(cbItem);
-//            cbItems.Add(new ComboBoxItem { Content = "Option 1" });
-//            cbItems.Add(new ComboBoxItem { Content = "Option 2" });
-//   
+            //            cbItems.Add(new ComboBoxItem {Content = Test.ToString()});
+            //            cbItems.Add(new ComboBoxItem { Content = Test });
+            //
+            //
+            //
+            //            var cbItem = new ComboBoxItem { Content = "<--Select-->" };
+            //            SelectedcbItem = cbItem;
+            //            cbItems.Add(cbItem);
+            //            cbItems.Add(new ComboBoxItem { Content = "Option 1" });
+            //            cbItems.Add(new ComboBoxItem { Content = "Option 2" });
+            //   
 
 
 
@@ -228,8 +186,8 @@ namespace MicrowaveApplicatie
         private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
         {
             person.RemoveAt(ComboBox1.SelectedIndex);
-            
-//            ItemsControl.ItemsSourceProperty
+
+            //            ItemsControl.ItemsSourceProperty
         }
 
         private void SelectFile_OnClick(object sender, RoutedEventArgs e)
@@ -242,7 +200,7 @@ namespace MicrowaveApplicatie
             // Set filter for file extension and default file extension 
             dlg.DefaultExt = ".png";
             dlg.Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif|All Files (*)|*";
-            
+
 
             // Display OpenFileDialog by calling ShowDialog method 
             Nullable<bool> result = dlg.ShowDialog();
@@ -253,27 +211,36 @@ namespace MicrowaveApplicatie
                 // Open document
                 Url.Text = dlg.FileName;
                 string filename = dlg.FileName;
-               
+
             }
 
         }
 
 
- 
+
 
 
 
 
         private void ComboBox1_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-//            var selectedItem = sender as ComboBox;
-//            string name = selectedItem.SelectedItem.ToString();
-//            MessageBox.Show(name);
+            //            var selectedItem = sender as ComboBox;
+            //            string name = selectedItem.SelectedItem.ToString();
+            //            MessageBox.Show(name);
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
         {
 
         }
+
+
+
+
+
+
+
+
+
     }
 }

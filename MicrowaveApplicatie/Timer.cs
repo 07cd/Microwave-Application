@@ -1,28 +1,21 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Reflection.Emit;
-using System.Text;
-using System.Threading.Tasks;
 using System.Timers;
 
 namespace MicrowaveApplicatie
 {
-
-    class Timer
+    internal class Timer
     {
-        System.Timers.Timer aTimer = new System.Timers.Timer();
+        private readonly System.Timers.Timer aTimer = new System.Timers.Timer();
 
 
         public Timer(int initialTime)
         {
             Time = initialTime;
-            aTimer.Elapsed += new ElapsedEventHandler(OnTimedEvent);
+            aTimer.Elapsed += OnTimedEvent;
             aTimer.Interval = 1000;
-            
         }
 
-        public void OnTimedEvent(Object source, System.Timers.ElapsedEventArgs e)
+        public void OnTimedEvent(object source, ElapsedEventArgs e)
         {
             if (Time != 0)
             {
@@ -36,8 +29,6 @@ namespace MicrowaveApplicatie
         }
 
 
-
-
         public int Time { get; set; }
 
 
@@ -46,16 +37,11 @@ namespace MicrowaveApplicatie
             get
             {
                 var timeSpan = TimeSpan.FromSeconds(Time);
-                var result = string.Format("{0:D2}:{1:D2}", (int)timeSpan.TotalMinutes, timeSpan.Seconds);
+                var result = string.Format("{0:D2}:{1:D2}", (int) timeSpan.TotalMinutes, timeSpan.Seconds);
                 return result;
             }
-            set { TimeString = value; }
+            set => TimeString = value;
         }
-
-
-
-
-
 
 
         public void StopTimer()
@@ -73,17 +59,14 @@ namespace MicrowaveApplicatie
 
         public void startTimer()
         {
-            
             aTimer.Start();
             Console.WriteLine(Time);
         }
 
 
-
         public void Add(int seconds)
         {
-            if (Time+seconds <= 5400)
-            {
+            if (Time + seconds <= 5400)
                 switch (seconds)
                 {
                     case 600:
@@ -99,11 +82,6 @@ namespace MicrowaveApplicatie
                         Time += 0;
                         break;
                 }
-            }
         }
-
-
-
-
     }
 }
