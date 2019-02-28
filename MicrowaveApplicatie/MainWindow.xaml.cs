@@ -16,6 +16,8 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using System.Windows.Threading;
+using System.ComponentModel;
+using System.Runtime.CompilerServices;
 
 
 namespace MicrowaveApplicatie
@@ -33,25 +35,32 @@ namespace MicrowaveApplicatie
         Watt watt = new Watt(0);
 
 
-        public ObservableCollection<ComboBoxItem> cbItems { get; set; }
-        public ComboBoxItem SelectedcbItem { get; set; }
 
-
-
+        private ObservableCollection<Dish> person;
 
 
         public MainWindow()
         {
-
-            InitializeComponent();
-
             DataContext = this;
-            cbItems = new ObservableCollection<ComboBoxItem>();
-           
+            InitializeComponent();
+            person = new ObservableCollection<Dish>()
+            {
+               
+                
+            };
+            ComboBox1.ItemsSource = null;
+            //            ComboBox1.ItemsSource = Dish.GetAllPersons();
+
         }
 
 
-     
+        
+
+
+
+
+
+
 
 
 
@@ -186,21 +195,22 @@ namespace MicrowaveApplicatie
             var image = Url.Text;
             var time = Tijd.Text;
             var name = TextBox1.Text;
-            Dish Test = new Dish("test", "test", "test");
-            cbItems.Add(new ComboBoxItem {Content = Test.ToString()});
-            cbItems.Add(new ComboBoxItem { Content = Test });
+            ComboBox1.ItemsSource = person;
+            person.Add(new Dish(name, image, time));
+//            cbItems.Add(new ComboBoxItem {Content = Test.ToString()});
+//            cbItems.Add(new ComboBoxItem { Content = Test });
+//
+//
+//
+//            var cbItem = new ComboBoxItem { Content = "<--Select-->" };
+//            SelectedcbItem = cbItem;
+//            cbItems.Add(cbItem);
+//            cbItems.Add(new ComboBoxItem { Content = "Option 1" });
+//            cbItems.Add(new ComboBoxItem { Content = "Option 2" });
+//   
 
 
 
-            var cbItem = new ComboBoxItem { Content = "<--Select-->" };
-            SelectedcbItem = cbItem;
-            cbItems.Add(cbItem);
-            cbItems.Add(new ComboBoxItem { Content = "Option 1" });
-            cbItems.Add(new ComboBoxItem { Content = "Option 2" });
-   
-
-
-          
 
 
             //            MessageBox.Show($"Image URL: {image} Time: {time} Name: {name}");
@@ -217,7 +227,8 @@ namespace MicrowaveApplicatie
 
         private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
         {
-            ComboBox1.Items.Remove(ComboBox1.SelectedItem);
+            person.RemoveAt(ComboBox1.SelectedIndex);
+            
 //            ItemsControl.ItemsSourceProperty
         }
 
@@ -255,9 +266,9 @@ namespace MicrowaveApplicatie
 
         private void ComboBox1_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            var selectedItem = sender as ComboBox;
-            string name = selectedItem.SelectedItem.ToString();
-            MessageBox.Show(name);
+//            var selectedItem = sender as ComboBox;
+//            string name = selectedItem.SelectedItem.ToString();
+//            MessageBox.Show(name);
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)

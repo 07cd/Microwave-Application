@@ -6,6 +6,7 @@
         xmlns:local="clr-namespace:MicrowaveApplicatie"
         mc:Ignorable="d"
         Title="MainWindow" Height="515.854" Width="1151.979">
+
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="167*"/>
@@ -36,35 +37,44 @@
 
 
 
-
+        <!-- <ListView Margin="-85,-320,95,330" Grid.Row="0"> -->
+        <!--     <ListView.View> -->
+        <!--         <GridView x:Name="grdNames"> -->
+        <!--             <GridViewColumn Header="Name"  DisplayMemberBinding="{Binding Name}"/> -->
+        <!--             <GridViewColumn Header="Address"  DisplayMemberBinding="{Binding URL}"/> -->
+        <!--             <GridViewColumn Header="Address"  DisplayMemberBinding="{Binding Time}"/> -->
+        <!--         </GridView> -->
+        <!--     </ListView.View> -->
+        <!-- </ListView> -->
 
 
         <!-- Gerechten -->
 
 
 
-        <ComboBox ItemsSource="{Binding cbItems}" SelectedItem="{Binding SelectedcbItem}"  x:Name="ComboBox1"  SelectionChanged="ComboBox1_OnSelectionChanged"  HorizontalAlignment="Left" Height="60" Margin="884,50,0,0" VerticalAlignment="Top" Width="250" Grid.Row="0">
+        <ComboBox  x:Name="ComboBox1"   SelectionChanged="ComboBox1_OnSelectionChanged"  HorizontalAlignment="Left" Height="60" Margin="884,50,0,0" VerticalAlignment="Top" Width="250" Grid.Row="0">
+
+            
 
 
-
-            <ComboBox.ItemTemplate>
-                <DataTemplate>
-
-                    <StackPanel  Height="60" Orientation="Horizontal"> 
-                    
-                        <StackPanel  Height="60" Orientation="Vertical"> 
-                            <TextBlock VerticalAlignment="Top" Text="Hello"/> 
-                            <TextBlock VerticalAlignment="Center" Text="{Binding Content.tijd}"/> 
-                        </StackPanel> 
-                    
-                        <Image  VerticalAlignment="Center"  Source="{Binding Content.url}" Height="50"/> 
-                    
-                    </StackPanel> 
-
-
-
-                </DataTemplate>
-            </ComboBox.ItemTemplate>
+            <!-- <ComboBox.ItemTemplate> -->
+            <!--     <DataTemplate> -->
+            <!-- -->
+            <!--         <StackPanel  Height="60" Orientation="Horizontal">  -->
+            <!--          -->
+            <!--             <StackPanel  Height="60" Orientation="Vertical">  -->
+            <!--                 <TextBlock VerticalAlignment="Top" Text="Hello"/>  -->
+            <!--                 <TextBlock VerticalAlignment="Center" Text="{Binding Content.tijd}"/>  -->
+            <!--             </StackPanel>  -->
+            <!--          -->
+            <!--             <Image  VerticalAlignment="Center"  Source="{Binding Content.url}" Height="50"/>  -->
+            <!--          -->
+            <!--         </StackPanel>  -->
+            <!-- -->
+            <!-- -->
+            <!-- -->
+            <!--     </DataTemplate> -->
+            <!-- </ComboBox.ItemTemplate> -->
 
             <!-- <StackPanel  Height="60" Orientation="Horizontal">  -->
             <!-- -->
@@ -78,20 +88,24 @@
             <!-- </StackPanel>  -->
 
 
-            <!-- <ComboBoxItem    FontFamily="Verdana" FontSize="12" FontWeight="Bold"> -->
-            <!--     <StackPanel  Height="60" Orientation="Horizontal"> -->
-            <!-- -->
-            <!--         <StackPanel  Height="60" Orientation="Vertical"> -->
-            <!--             <TextBlock VerticalAlignment="Top" Text="Coffie"/> -->
-            <!--             <TextBlock VerticalAlignment="Center" Text="1 min 30 sec"/> -->
-            <!--         </StackPanel> -->
-            <!-- -->
-            <!--         <Image  VerticalAlignment="Center"  Source="https://banner2.kisspng.com/20180330/jtw/kisspng-turkish-coffee-espresso-latte-cafe-coffe-5abdea92a9af74.7272284115223957946951.jpg" Height="50"/> -->
-            <!-- -->
-            <!--     </StackPanel> -->
-            <!-- </ComboBoxItem> -->
-        </ComboBox>
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel  Height="60" Orientation="Horizontal">
 
+                        <StackPanel  Height="60" Orientation="Vertical">
+                            <TextBlock VerticalAlignment="Top" Text="{Binding Name}"/>
+                            <TextBlock VerticalAlignment="Center" Text="{Binding Time}"/>
+                        </StackPanel>
+
+                        <Image  VerticalAlignment="Center"  Source="{Binding URL}" Height="50"/>
+
+                    </StackPanel>
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+
+
+
+        </ComboBox>
 
 
 
