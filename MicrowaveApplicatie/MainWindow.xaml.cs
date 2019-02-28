@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
@@ -32,7 +33,10 @@ namespace MicrowaveApplicatie
         Watt watt = new Watt(0);
 
 
-        
+        public ObservableCollection<ComboBoxItem> cbItems { get; set; }
+        public ComboBoxItem SelectedcbItem { get; set; }
+
+
 
 
 
@@ -41,14 +45,13 @@ namespace MicrowaveApplicatie
 
             InitializeComponent();
 
-          
-
+            DataContext = this;
+            cbItems = new ObservableCollection<ComboBoxItem>();
+           
         }
 
 
-
-
-
+     
 
 
 
@@ -73,16 +76,19 @@ namespace MicrowaveApplicatie
             {
                 case "System.Windows.Controls.Button: Pause":
                     tests.pauseTimer();
+                    
                     MessageBox.Show(sender.ToString());
                     break;
                 case "System.Windows.Controls.Button: Start":
                     tests.startTimer();
+                    
                     //Met een lamp aan + animatie?
-                    Image.Source = new BitmapImage(new Uri(@"Assets/"));
+                    //Image.Source = new BitmapImage(new Uri(@"Assets/"));
                     MessageBox.Show(sender.ToString());
                     break;
                 case "System.Windows.Controls.Button: Stop":
                     tests.StopTimer();
+                    
                     MessageBox.Show(sender.ToString());
                     break;
                 case "System.Windows.Controls.Button: Open":
@@ -174,14 +180,89 @@ namespace MicrowaveApplicatie
             }
         }
 
-     
+
+        private void AddButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            var image = Url.Text;
+            var time = Tijd.Text;
+            var name = TextBox1.Text;
+            Dish Test = new Dish("test", "test", "test");
+            cbItems.Add(new ComboBoxItem {Content = Test.ToString()});
+            cbItems.Add(new ComboBoxItem { Content = Test });
 
 
-  
+
+            var cbItem = new ComboBoxItem { Content = "<--Select-->" };
+            SelectedcbItem = cbItem;
+            cbItems.Add(cbItem);
+            cbItems.Add(new ComboBoxItem { Content = "Option 1" });
+            cbItems.Add(new ComboBoxItem { Content = "Option 2" });
+   
+
+
+          
+
+
+            //            MessageBox.Show($"Image URL: {image} Time: {time} Name: {name}");
+            //            if (TextBox1.Text != "")
+            //            {
+            //                D
+            //
+            //               
+            //                cbItems.Add(new ComboBoxItem());
+            //                
+            //            }
+        }
+
+
+        private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
+        {
+            ComboBox1.Items.Remove(ComboBox1.SelectedItem);
+//            ItemsControl.ItemsSourceProperty
+        }
+
+        private void SelectFile_OnClick(object sender, RoutedEventArgs e)
+        {
+            // Create OpenFileDialog 
+            Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+
+
+
+            // Set filter for file extension and default file extension 
+            dlg.DefaultExt = ".png";
+            dlg.Filter = "JPEG Files (*.jpeg)|*.jpeg|PNG Files (*.png)|*.png|JPG Files (*.jpg)|*.jpg|GIF Files (*.gif)|*.gif|All Files (*)|*";
+            
+
+            // Display OpenFileDialog by calling ShowDialog method 
+            Nullable<bool> result = dlg.ShowDialog();
+
+            if (result == true)
+            {
+
+                // Open document
+                Url.Text = dlg.FileName;
+                string filename = dlg.FileName;
+               
+            }
+
+        }
+
+
+ 
 
 
 
 
+        private void ComboBox1_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            var selectedItem = sender as ComboBox;
+            string name = selectedItem.SelectedItem.ToString();
+            MessageBox.Show(name);
+        }
 
+        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
     }
 }

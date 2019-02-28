@@ -5,12 +5,16 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:MicrowaveApplicatie"
         mc:Ignorable="d"
-        Title="MainWindow" Height="515.854" Width="877.979">
+        Title="MainWindow" Height="515.854" Width="1151.979">
     <Grid >
         <Grid.RowDefinitions>
             <RowDefinition Height="167*"/>
             <RowDefinition Height="319*"/>
         </Grid.RowDefinitions>
+
+
+        <!-- Magnetron-->
+
         <Image x:Name="Image"  HorizontalAlignment="Left" Height="485" VerticalAlignment="Top" Width="889" Source="Assets/0001.png" Margin="0,0,-19,0" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2"/>
         <MediaElement x:Name="MediaPlayerOpen"  HorizontalAlignment="Left" Height="485" Source="Assets/Open.mp4"  VerticalAlignment="Top" Width="889"  LoadedBehavior="Manual" UnloadedBehavior="Manual" Grid.RowSpan="2" Margin="0,0,-19,0"/>
         <MediaElement x:Name="MediaPlayerClose"  HorizontalAlignment="Left" Height="485" Source="Assets/Close.mp4"  VerticalAlignment="Top" Width="860"  LoadedBehavior="Manual" UnloadedBehavior="Manual" Grid.RowSpan="2"/>
@@ -19,11 +23,97 @@
         <Button Content="+1/2" HorizontalAlignment="Left" Height="44" Margin="670,84.5,0,0" VerticalAlignment="Top" Width="40" AutomationProperties.IsColumnHeader="True" Opacity="0.1"  PreviewMouseLeftButtonUp="KeyBindings" Grid.Row="1"/>
         <Button Content="+1" HorizontalAlignment="Left" Height="44" Margin="721,84.5,0,0" VerticalAlignment="Top" Width="40" AutomationProperties.IsColumnHeader="True" Opacity="0.1" PreviewMouseLeftButtonUp="KeyBindings" Grid.Row="1"/>
         <Button Content="+10" HorizontalAlignment="Left" Height="44" Margin="772,84.5,0,0" VerticalAlignment="Top" Width="40" AutomationProperties.IsColumnHeader="True" Opacity="0.1" PreviewMouseLeftButtonUp="KeyBindings" Grid.Row="1"/>
-        <Label x:Name="Label" Content="00:00&#xA;" HorizontalAlignment="Left" Height="68" Margin="670,113,0,0" VerticalAlignment="Top" Width="136" FontSize="48" Grid.RowSpan="2"/>
+        <Label x:Name="Label" Content="00:00" HorizontalAlignment="Left" Height="68" Margin="657,110,0,0" VerticalAlignment="Top" Width="136" FontSize="48" Grid.RowSpan="2" Foreground="#FF932424">
+            <Label.Background>
+                <ImageBrush/>
+            </Label.Background>
+        </Label>
         <Button Content="Start" HorizontalAlignment="Left" Height="47" Margin="670,213.5,0,0" VerticalAlignment="Top" Width="142" AutomationProperties.IsColumnHeader="True" Opacity="0.1" PreviewMouseLeftButtonUp="KeyBindings" Grid.Row="1"/>
         <Button Content="Stop" HorizontalAlignment="Left" Height="43" Margin="676,165.5,0,0" VerticalAlignment="Top" Width="51" AutomationProperties.IsColumnHeader="True" Opacity="0.1" PreviewMouseLeftButtonUp="KeyBindings" Grid.Row="1"/>
         <Button Content="Pause" HorizontalAlignment="Left" Height="43" Margin="752,165.5,0,0" VerticalAlignment="Top" Width="51" AutomationProperties.IsColumnHeader="True" Opacity="0.1" PreviewMouseLeftButtonUp="KeyBindings" Grid.Row="1"/>
-        <Button Content="Open" HorizontalAlignment="Left" Height="242" Margin="607,130,0,0" VerticalAlignment="Top" Width="36" PreviewMouseLeftButtonUp="KeyBindings" Grid.RowSpan="2"/>
+        <Button Content="Open" HorizontalAlignment="Left" Height="242" Margin="594,126,0,0" VerticalAlignment="Top" Width="36" PreviewMouseLeftButtonUp="KeyBindings" Grid.RowSpan="2"/>
         <Button Content="*" HorizontalAlignment="Left" Height="23" Margin="688,139.5,0,0" VerticalAlignment="Top" Width="21" AutomationProperties.IsColumnHeader="True" Opacity="0.1"  PreviewMouseLeftButtonUp="KeyBindings" Grid.Row="1"/>
+
+
+
+
+
+
+        <!-- Gerechten -->
+
+
+
+        <ComboBox ItemsSource="{Binding cbItems}" SelectedItem="{Binding SelectedcbItem}"  x:Name="ComboBox1"  SelectionChanged="ComboBox1_OnSelectionChanged"  HorizontalAlignment="Left" Height="60" Margin="884,50,0,0" VerticalAlignment="Top" Width="250" Grid.Row="0">
+
+
+
+            <ComboBox.ItemTemplate>
+                <DataTemplate>
+
+                    <StackPanel  Height="60" Orientation="Horizontal"> 
+                    
+                        <StackPanel  Height="60" Orientation="Vertical"> 
+                            <TextBlock VerticalAlignment="Top" Text="Hello"/> 
+                            <TextBlock VerticalAlignment="Center" Text="{Binding Content.tijd}"/> 
+                        </StackPanel> 
+                    
+                        <Image  VerticalAlignment="Center"  Source="{Binding Content.url}" Height="50"/> 
+                    
+                    </StackPanel> 
+
+
+
+                </DataTemplate>
+            </ComboBox.ItemTemplate>
+
+            <!-- <StackPanel  Height="60" Orientation="Horizontal">  -->
+            <!-- -->
+            <!--     <StackPanel  Height="60" Orientation="Vertical">  -->
+            <!--         <TextBlock VerticalAlignment="Top" Text="{Binding Content}"/>  -->
+            <!--         <TextBlock VerticalAlignment="Center" Text="1 min 30 sec"/> -->
+            <!--     </StackPanel>  -->
+            <!-- -->
+            <!--     ~1~ <Image  VerticalAlignment="Center"  Source="" Height="50"/>  @1@ -->
+            <!-- -->
+            <!-- </StackPanel>  -->
+
+
+            <!-- <ComboBoxItem    FontFamily="Verdana" FontSize="12" FontWeight="Bold"> -->
+            <!--     <StackPanel  Height="60" Orientation="Horizontal"> -->
+            <!-- -->
+            <!--         <StackPanel  Height="60" Orientation="Vertical"> -->
+            <!--             <TextBlock VerticalAlignment="Top" Text="Coffie"/> -->
+            <!--             <TextBlock VerticalAlignment="Center" Text="1 min 30 sec"/> -->
+            <!--         </StackPanel> -->
+            <!-- -->
+            <!--         <Image  VerticalAlignment="Center"  Source="https://banner2.kisspng.com/20180330/jtw/kisspng-turkish-coffee-espresso-latte-cafe-coffe-5abdea92a9af74.7272284115223957946951.jpg" Height="50"/> -->
+            <!-- -->
+            <!--     </StackPanel> -->
+            <!-- </ComboBoxItem> -->
+        </ComboBox>
+
+
+
+
+
+
+
+        <TextBox Name="TextBox1" Margin="969,123,23,171" RenderTransformOrigin="0.5,0.5" Grid.Row="1"/>
+        <TextBox Name="Tijd" Margin="969,132,23,9" RenderTransformOrigin="0.5,0.5"/>
+
+        <TextBox Name="Url" Margin="925,33,23,259" RenderTransformOrigin="0.5,0.5" Grid.Row="1"/>
+
+        <Label  Width="80" Height="25" Margin="884,123,180,171" Content="Naam" Grid.Row="1"/>
+
+
+        <Button Name="AddButton" Width="80" Height="25" Content="Add Item" Margin="884,165,180,127" Click="AddButton_OnClick" Grid.Row="1" />
+        <Button x:Name="DeleteButton" Height="25" Content="Delete selected" Margin="884,7,144,135" Click="DeleteButton_OnClick" />
+        <Button x:Name="SelectFile" Height="25" Content="File" Margin="884,85,23,207" Click="SelectFile_OnClick" Grid.Row="1" />
+
+        <Label  Width="80" Height="25" Margin="884,132,180,9" Content="Tijd"/>
+        <Label  Width="80" Height="24" Margin="969,59,95,235" Content="Or" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1"/>
+        <Label  Width="80" Height="25" Margin="884,1,180,291" Content="Image" Grid.Row="1"/>
+        <Label Height="25" Margin="884,33,224,259" Content="URL" Grid.Row="1"/>
+
     </Grid>
 </Window>
