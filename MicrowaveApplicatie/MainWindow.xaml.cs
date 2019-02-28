@@ -53,10 +53,6 @@ namespace MicrowaveApplicatie
 
 
 
-
-
-
-
         private async Task test()
         {
             if (_timer.Enabled)
@@ -155,7 +151,6 @@ namespace MicrowaveApplicatie
                 default:
                     MessageBox.Show("Error");
                     break;
-
 
             }
         }
