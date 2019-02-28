@@ -21,38 +21,41 @@
 
         <!-- Magnetron-->
 
-        <Expander Header="Expander" HorizontalAlignment="Left" Height="278" Margin="871,150,0,0" VerticalAlignment="Top" Width="263" Grid.RowSpan="2">
-            <Grid Background="#FFE5E5E5">
-                <Grid.ColumnDefinitions>
-                    <ColumnDefinition Width="95*"/>
-                    <ColumnDefinition Width="29*"/>
-                </Grid.ColumnDefinitions>
-            </Grid>
-        </Expander>
+        <TextBox x:Name="Name" Margin="969,172,23,122" RenderTransformOrigin="0.5,0.5" Grid.Row="1"/>
+
+        <TextBox x:Name="Url" Margin="925,82,23,210" RenderTransformOrigin="0.5,0.5" Grid.Row="1"/>
+
+        <Label  Width="80"  Height="25" Margin="884,172,180,121" Content="Naam" Grid.Row="1"/>
+
+
+        <Button x:Name="AddButton" Width="80" Height="25" Content="Add Item" Margin="884,215,180,78" Click="AddButton_OnClick" Grid.Row="1" />
+
+        <Button x:Name="SelectFile" Height="25" Content="Select File" Margin="884,135,23,158" Click="SelectFile_OnClick" Grid.Row="1" />
+        <Label  Width="80" Height="24" Margin="995,108,69,186" Content="Or" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1"/>
+        <Label  Width="80" Height="25" Margin="884,51,180,242" Content="Image" Grid.Row="1"/>
+        <Label Height="25" Margin="884,83,224,210" Content="URL" Grid.Row="1"/>
+
 
 
 
 
         <!-- Magnetron-->
-
+        <Image x:Name="Image_closed"  HorizontalAlignment="Left" Height="485" VerticalAlignment="Top" Width="889" Source="Assets/door_open.png" Margin="0,0,-19,0" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2" Visibility="Hidden"/>
         <Image x:Name="Image"  HorizontalAlignment="Left" Height="485" VerticalAlignment="Top" Width="889" Source="Assets/0001.png" Margin="0,0,-19,0" RenderTransformOrigin="0.5,0.5" Grid.RowSpan="2"/>
         <MediaElement x:Name="MediaPlayerOpen"  HorizontalAlignment="Left" Height="485" Source="Assets/Open.mp4"  VerticalAlignment="Top" Width="889"  LoadedBehavior="Manual" UnloadedBehavior="Manual" Grid.RowSpan="2" Margin="0,0,-19,0"/>
         <MediaElement x:Name="MediaPlayerClose"  HorizontalAlignment="Left" Height="485" Source="Assets/Close.mp4"  VerticalAlignment="Top" Width="860"  LoadedBehavior="Manual" UnloadedBehavior="Manual" Grid.RowSpan="2"/>
-        <Button Content="&lt;" HorizontalAlignment="Left" Height="39" Margin="676,32.5,0,0" VerticalAlignment="Top" Width="51" AutomationProperties.IsColumnHeader="True" Opacity="0.1" Click="KeyBindings" Grid.Row="1"/>
-        <Button Content="&gt;" HorizontalAlignment="Left" Height="39" Margin="752,32.5,0,0" VerticalAlignment="Top" Width="54" AutomationProperties.IsColumnHeader="True" Opacity="0.1" Click="KeyBindings" Grid.Row="1"/>
-        <Button Content="+1/2" HorizontalAlignment="Left" Height="44" Margin="670,84.5,0,0" VerticalAlignment="Top" Width="40" AutomationProperties.IsColumnHeader="True" Opacity="0.1"  PreviewMouseLeftButtonUp="KeyBindings" Grid.Row="1"/>
-        <Button Content="+1" HorizontalAlignment="Left" Height="44" Margin="721,84.5,0,0" VerticalAlignment="Top" Width="40" AutomationProperties.IsColumnHeader="True" Opacity="0.1" PreviewMouseLeftButtonUp="KeyBindings" Grid.Row="1"/>
-        <Button Content="+10" HorizontalAlignment="Left" Height="44" Margin="772,84.5,0,0" VerticalAlignment="Top" Width="40" AutomationProperties.IsColumnHeader="True" Opacity="0.1" PreviewMouseLeftButtonUp="KeyBindings" Grid.Row="1"/>
-        <Label x:Name="Label" Content="00:00" HorizontalAlignment="Left" Height="68" Margin="657,110,0,0" VerticalAlignment="Top" Width="136" FontSize="48" Grid.RowSpan="2" Foreground="#FF932424">
-            <Label.Background>
-                <ImageBrush/>
-            </Label.Background>
-        </Label>
-        <Button Content="Start" HorizontalAlignment="Left" Height="47" Margin="670,213.5,0,0" VerticalAlignment="Top" Width="142" AutomationProperties.IsColumnHeader="True" Opacity="0.1" PreviewMouseLeftButtonUp="KeyBindings" Grid.Row="1"/>
-        <Button Content="Stop" HorizontalAlignment="Left" Height="43" Margin="676,165.5,0,0" VerticalAlignment="Top" Width="51" AutomationProperties.IsColumnHeader="True" Opacity="0.1" PreviewMouseLeftButtonUp="KeyBindings" Grid.Row="1"/>
-        <Button Content="Pause" HorizontalAlignment="Left" Height="43" Margin="752,165.5,0,0" VerticalAlignment="Top" Width="51" AutomationProperties.IsColumnHeader="True" Opacity="0.1" PreviewMouseLeftButtonUp="KeyBindings" Grid.Row="1"/>
-        <Button x:Name="DoorButton" Content="Open" HorizontalAlignment="Left" Height="242" Margin="594,126,0,0" VerticalAlignment="Top" Width="36" PreviewMouseLeftButtonUp="KeyBindings" Grid.RowSpan="2"/>
-        <Button Content="*" HorizontalAlignment="Left" Height="23" Margin="688,139.5,0,0" VerticalAlignment="Top" Width="21" AutomationProperties.IsColumnHeader="True" Opacity="0.1"  PreviewMouseLeftButtonUp="KeyBindings" Grid.Row="1"/>
+        <Button Content="&lt;" HorizontalAlignment="Left" Height="24" Margin="612,69,0,0" VerticalAlignment="Top" Width="33" AutomationProperties.IsColumnHeader="True" Opacity="0.1" Click="KeyBindings" Grid.Row="1"/>
+        <Button Content="&gt;" HorizontalAlignment="Left" Height="24" Margin="666,69,0,0" VerticalAlignment="Top" Width="29" AutomationProperties.IsColumnHeader="True" Opacity="0.1" Click="KeyBindings" Grid.Row="1"/>
+        <Button Content="+1/2" HorizontalAlignment="Left" Height="25" Margin="604,113,0,0" VerticalAlignment="Top" Width="31" AutomationProperties.IsColumnHeader="True" Opacity="0.1"  PreviewMouseLeftButtonUp="KeyBindings" Grid.Row="1"/>
+        <Button Content="+1" HorizontalAlignment="Left" Height="30" Margin="643,113,0,0" VerticalAlignment="Top" Width="22" AutomationProperties.IsColumnHeader="True" Opacity="0.1" PreviewMouseLeftButtonUp="KeyBindings" Grid.Row="1"/>
+        <Button Content="+10" HorizontalAlignment="Left" Height="31" Margin="676,109,0,0" VerticalAlignment="Top" Width="29" AutomationProperties.IsColumnHeader="True" Opacity="0.1" PreviewMouseLeftButtonUp="KeyBindings" Grid.Row="1"/>
+        <Label x:Name="Label" Content="00:00" HorizontalAlignment="Left" Height="56" Margin="612,150,0,0" VerticalAlignment="Top" Width="108" FontSize="36" Foreground="#FF932424" FontFamily="Digital-7" Grid.RowSpan="2" />
+
+        <Button Content="Start" HorizontalAlignment="Left" Height="30" Margin="612,178,0,0" VerticalAlignment="Top" Width="83" AutomationProperties.IsColumnHeader="True" Opacity="0.1" PreviewMouseLeftButtonUp="KeyBindings" Grid.Row="1"/>
+        <Button Content="Stop" HorizontalAlignment="Left" Height="27" Margin="612,146,0,0" VerticalAlignment="Top" Width="38" AutomationProperties.IsColumnHeader="True" Opacity="0.1" PreviewMouseLeftButtonUp="KeyBindings" Grid.Row="1"/>
+        <Button Content="Pause" HorizontalAlignment="Left" Height="26" Margin="660,147,0,0" VerticalAlignment="Top" Width="35" AutomationProperties.IsColumnHeader="True" Opacity="0.1" PreviewMouseLeftButtonUp="KeyBindings" Grid.Row="1"/>
+        <Button x:Name="DoorButton" Content="Open" HorizontalAlignment="Left" Height="35" Margin="635,107,0,0" VerticalAlignment="Top" Width="45" PreviewMouseLeftButtonUp="KeyBindings"/>
+        <Button Content="*" HorizontalAlignment="Left" Height="12" Margin="614,41,0,0" VerticalAlignment="Top" Width="11" AutomationProperties.IsColumnHeader="True" Opacity="0.1"  PreviewMouseLeftButtonUp="KeyBindings" Grid.Row="1"/>
 
 
 
@@ -62,35 +65,6 @@
 
 
 
-            <!-- <ComboBox.ItemTemplate> -->
-            <!--     <DataTemplate> -->
-            <!-- -->
-            <!--         <StackPanel  Height="60" Orientation="Horizontal">  -->
-            <!--          -->
-            <!--             <StackPanel  Height="60" Orientation="Vertical">  -->
-            <!--                 <TextBlock VerticalAlignment="Top" Text="Hello"/>  -->
-            <!--                 <TextBlock VerticalAlignment="Center" Text="{Binding Content.tijd}"/>  -->
-            <!--             </StackPanel>  -->
-            <!--          -->
-            <!--             <Image  VerticalAlignment="Center"  Source="{Binding Content.url}" Height="50"/>  -->
-            <!--          -->
-            <!--         </StackPanel>  -->
-            <!-- -->
-            <!-- -->
-            <!-- -->
-            <!--     </DataTemplate> -->
-            <!-- </ComboBox.ItemTemplate> -->
-
-            <!-- <StackPanel  Height="60" Orientation="Horizontal">  -->
-            <!-- -->
-            <!--     <StackPanel  Height="60" Orientation="Vertical">  -->
-            <!--         <TextBlock VerticalAlignment="Top" Text="{Binding Content}"/>  -->
-            <!--         <TextBlock VerticalAlignment="Center" Text="1 min 30 sec"/> -->
-            <!--     </StackPanel>  -->
-            <!-- -->
-            <!--     ~1~ <Image  VerticalAlignment="Center"  Source="" Height="50"/>  @1@ -->
-            <!-- -->
-            <!-- </StackPanel>  -->
 
 
             <ComboBox.ItemTemplate>
@@ -120,28 +94,10 @@
 
 
 
-        <TextBox x:Name="Name" Margin="969,172,23,122" RenderTransformOrigin="0.5,0.5" Grid.Row="1"/>
-        <TextBox x:Name="Tijd" Margin="964,14,28,278" RenderTransformOrigin="0.5,0.5" Grid.Row="1"/>
-
-        <TextBox x:Name="Url" Margin="925,82,23,210" RenderTransformOrigin="0.5,0.5" Grid.Row="1"/>
-
-        <Label  Width="80" Height="25" Margin="884,172,180,121" Content="Naam" Grid.Row="1"/>
-
-
-        <Button x:Name="AddButton" Width="80" Height="25" Content="Add Item" Margin="884,215,180,78" Click="AddButton_OnClick" Grid.Row="1" />
-
-        <Button x:Name="SelectFile" Height="25" Content="Select File" Margin="884,135,23,158" Click="SelectFile_OnClick" Grid.Row="1" />
-
-        <Label  Width="80" Height="25" Margin="884,15,180,278" Content="Tijd" Grid.Row="1"/>
-        <Label  Width="80" Height="24" Margin="969,108,95,186" Content="Or" HorizontalAlignment="Center" VerticalAlignment="Center" Grid.Row="1"/>
-        <Label  Width="80" Height="25" Margin="884,51,180,242" Content="Image" Grid.Row="1"/>
-        <Label Height="25" Margin="884,83,224,210" Content="URL" Grid.Row="1"/>
 
 
 
-
-
-        <Image x:Name="MicrowaveItem" HorizontalAlignment="Left" Height="246" Margin="185,130,0,0" Grid.RowSpan="2" VerticalAlignment="Top" Width="380"/>
+        <Image x:Name="MicrowaveItem" HorizontalAlignment="Left" Height="173" Margin="300,0,0,0" VerticalAlignment="Top" Width="255" Grid.Row="1"/>
 
     </Grid>
 </Window>

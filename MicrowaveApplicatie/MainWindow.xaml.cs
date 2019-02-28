@@ -20,7 +20,7 @@ namespace MicrowaveApplicatie
     /// </summary>
     public partial class MainWindow : Window
     {
-//        Microwave cd07 = new Microwave();
+
 
         private readonly Timer _timer = new Timer(0);
 
@@ -38,27 +38,28 @@ namespace MicrowaveApplicatie
             InitializeComponent();
             DataContext = this;
             InitializeComponent();
+            // Sample data
             dish = new ObservableCollection<Dish>()
             {
-                new Dish("Koffie", "https://www.kahlua.com/globalassets/images/cocktails/2018/opt/kahluadrinks_wide_coffee1.png", "Test"),
-                new Dish("Burger", "https://frontierburger.com/sites/default/files/styles/large/public/item_photos/2018-07/menuitem-hamburger.png?itok=QZG0Argx", "Test"),
-                new Dish("MicrowaveCeption", "https://thegoodguys.sirv.com/products/50046601/50046601_496424.PNG?scale.height=505&scale.width=773&canvas.height=505&canvas.width=773&canvas.opacity=0&format=png&png.optimize=true","test")
-
+                new Dish("Koffie", "https://www.kahlua.com/globalassets/images/cocktails/2018/opt/kahluadrinks_wide_coffee1.png"),
+                new Dish("Burger", "https://frontierburger.com/sites/default/files/styles/large/public/item_photos/2018-07/menuitem-hamburger.png?itok=QZG0Argx"),
+                new Dish("Microwave", "https://thegoodguys.sirv.com/products/50046601/50046601_496424.PNG?scale.height=505&scale.width=773&canvas.height=505&canvas.width=773&canvas.opacity=0&format=png&png.optimize=true"),
+                new Dish("Kat", "https://www.petplan.co.uk/images/cat-small.png")
             };
             ComboBox1.ItemsSource = dish;
 
-
-
+            
         }
 
 
 
-        private async Task test()
+        private async Task DisplayWatt()
         {
             if (_timer.Enabled)
             {
                 Label.Content = _watt.currWatt;
                 _timer.wattState = true;
+                // Wait a second
                 await Task.Delay(1000);
                 _timer.wattState = false;
 
@@ -75,6 +76,7 @@ namespace MicrowaveApplicatie
 
         private void KeyBindings(object sender, RoutedEventArgs e)
         {
+            // Switch for all keybindings concerning the microwave: time, watt and door controls
             switch (sender.ToString())
             {
                 case "System.Windows.Controls.Button: Pause":
@@ -97,15 +99,17 @@ namespace MicrowaveApplicatie
                     break;
                 case "System.Windows.Controls.Button: Open":
                     _microwave.OpenDoor();
-
                     _timer.pauseTimer();
-                    
+                    Image_closed.Visibility = Visibility.Visible;
+                    Image.Visibility = Visibility.Hidden;
                     MicrowaveItem.Opacity = 0.8;
                     break;
 
                 case "System.Windows.Controls.Button: Close":
                     _microwave.CloseDoor();
                     Label.Opacity = 1;
+                    Image_closed.Visibility = Visibility.Hidden;
+                    Image.Visibility = Visibility.Visible;
                     MicrowaveItem.Opacity = 0.3;
                     break;
 
@@ -116,7 +120,7 @@ namespace MicrowaveApplicatie
                     }
 
 
-                    test();
+                    DisplayWatt();
                     
                     break;
 
@@ -127,8 +131,7 @@ namespace MicrowaveApplicatie
                     }
 
 
-                    test();
-
+                    DisplayWatt();
 
                     break;
                 case "System.Windows.Controls.Button: +1/2":
@@ -144,7 +147,6 @@ namespace MicrowaveApplicatie
                 case "System.Windows.Controls.Button: +10":
                     _timer.Add(600);
                     Label.Content = _timer.TimeString;
-
                     break;
                 case "System.Windows.Controls.Button: *":
                     break;
@@ -154,13 +156,15 @@ namespace MicrowaveApplicatie
 
             }
         }
+
         private void AddButton_OnClick(object sender, RoutedEventArgs e)
         {
+            // Get text from text fields
             var image = Url.Text;
-            var time = Tijd.Text;
             var name = Name.Text;
             
-            dish.Add(new Dish(name, image, time));
+            // Create a new list item
+            dish.Add(new Dish(name, image));
 
         }
 
@@ -169,6 +173,7 @@ namespace MicrowaveApplicatie
         {
             dish.RemoveAt(ComboBox1.SelectedIndex);
         }
+
 
         private void SelectFile_OnClick(object sender, RoutedEventArgs e)
         {
@@ -198,25 +203,33 @@ namespace MicrowaveApplicatie
 
         private void ComboBox1_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
+            // Enable buttons after a selection has been made
             InsertButton.IsEnabled = true;
             DeleteButton.IsEnabled = true;
         }
 
-//        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
-//        {
-//
-//        }
+
 
 
         private void InsertButton_OnClick(object sender, RoutedEventArgs e)
         {
+            // Clear text fields
              Name.Clear();
-             Tijd.Clear();
              Url.Clear();
+             try
+             {
+                 // Try to Put the image path in the source
+                 string URL = dish[ComboBox1.SelectedIndex].URL;
+                 MicrowaveItem.Source = new BitmapImage(new Uri(URL));
 
-             string URL = dish[ComboBox1.SelectedIndex].URL;
-             MicrowaveItem.Source = new BitmapImage(new Uri(URL));           
-             MicrowaveItem.Opacity = 0.3;
+                
+                 MicrowaveItem.Opacity = 0.3;
+             }
+             catch
+             {
+                // If that fails
+                // Do nothing
+             }
         }
     }
 }

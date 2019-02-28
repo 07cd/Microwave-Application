@@ -99,14 +99,9 @@
   <ItemGroup>
     <None Include="App.config" />
   </ItemGroup>
+  <ItemGroup />
   <ItemGroup>
-    <Resource Include="Assets\microwave.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\0001.png" />
-  </ItemGroup>
-  <ItemGroup>
-    <Resource Include="Assets\0023.png" />
+    <Resource Include="Assets\door_closed_light.png" />
   </ItemGroup>
   <ItemGroup>
     <Content Include="Assets\Close.mp4">
@@ -115,6 +110,12 @@
     <Content Include="Assets\Open.mp4">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Resource Include="Assets\door_open_light_on.png" />
+    <Resource Include="Assets\0001.png" />
+    <Content Include="Assets\Close_Door.mp4" />
+    <Resource Include="Assets\door_open.png" />
+    <Resource Include="Assets\door_closed.png" />
+    <Content Include="Assets\Open_Door.mp4" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

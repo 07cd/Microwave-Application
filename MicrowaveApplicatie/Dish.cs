@@ -16,37 +16,32 @@ namespace MicrowaveApplicatie
 
         private string name;
 
+        // Set and get Name of the dish
         public string Name
         {
             get { return name; }
             set { name = value; }
         }
 
+        
         private string url;
 
+        // Set and get the URL
         public string URL
         {
             get { return url; }
             set { url = value; }
         }
 
-        private string time;
-        public string Time
+   
+        // Constructor to set the name and url
+        public Dish(string name, string url)
         {
-            get { return time; }
-            set { time = value; }
-        }
-
-
-        public Dish(string name, string url, string time)
-        {
-            Time = time;
+          
             Name = name;
             URL = url;
         }
 
-        public Dish()
-        {
-        }
+
     }
 }

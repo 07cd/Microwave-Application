@@ -1,7 +1,9 @@
-﻿using System.Threading;
+﻿using System;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace MicrowaveApplicatie
 {
@@ -14,9 +16,10 @@ namespace MicrowaveApplicatie
         {
             while (State)
             {
-
+                // Wait half a second
                 await Task.Delay(500);
 
+                // Blink label
                 if (MainWindow.Main.Label.Foreground.Opacity == 0)
                     MainWindow.Main.Label.Foreground.Opacity = 1;
                 else
@@ -28,19 +31,24 @@ namespace MicrowaveApplicatie
         public void OpenDoor()
         {
             State = true;
-        
-
+            // Stop previous mediaPlayer
             MainWindow.Main.MediaPlayerClose.Close();
-            
+            // Blink label
             Blink(true);
-            MainWindow.Main.DoorButton.Content = "Close";
+            
+            // Change button text to close
+            MainWindow.Main.DoorButton.Content = "Close"; 
+            // Hide the previous mediaplayer and unhide the new mediaplayer, in this case MediaPlayerOpen
             MainWindow.Main.MediaPlayerOpen.Visibility = Visibility.Visible;
             MainWindow.Main.MediaPlayerClose.Visibility = Visibility.Hidden;
+            // Start MediaPlayerOpen
             MainWindow.Main.MediaPlayerOpen.Play();
+            
         }
 
         public void CloseDoor()
         {
+            
             Blink(false);
             State = false;
             MainWindow.Main.MediaPlayerOpen.Close();

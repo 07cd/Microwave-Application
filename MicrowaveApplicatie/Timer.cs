@@ -1,15 +1,20 @@
 ﻿using System;
 using System.Timers;
+using System.Windows.Controls;
+using System.Windows.Media.Imaging;
 
 namespace MicrowaveApplicatie
 {
     internal class Timer
     {
+        
         private readonly System.Timers.Timer aTimer = new System.Timers.Timer();
+
+        // Boolean to check if timer is running or not
         public bool Enabled;
+        // Boolean to check
         public bool wattState;
-
-
+        // Constructor to set initialtime
         public Timer(int initialTime)
         {
             Time = initialTime;
@@ -19,14 +24,15 @@ namespace MicrowaveApplicatie
 
         public void OnTimedEvent(object source, ElapsedEventArgs e)
         {
-            //Deur dicht
-
+            
             if (Time != 0)
             {
-                //Licht aan
+                //MainWindow.Main.Image.Source = new BitmapImage(new Uri("Assets/"));
                 Time--;
+                // Checks if thread is in use
                 if (!MainWindow.Main.Label.Dispatcher.CheckAccess())
                 {
+                    // Execute this synchronously with the rest of the program
                     MainWindow.Main.Label.Dispatcher.Invoke(() =>
                     {
                         if (!wattState)
@@ -52,6 +58,7 @@ namespace MicrowaveApplicatie
         {
             get
             {
+                // Creates a 00:00:00 format with the amount of seconds from time
                 var timeSpan = TimeSpan.FromSeconds(Time);
                 var result = string.Format("{0:D2}:{1:D2}", (int) timeSpan.TotalMinutes, timeSpan.Seconds);
                 return result;
@@ -68,11 +75,13 @@ namespace MicrowaveApplicatie
             MainWindow.Main.Label.Content = TimeString;
         }
 
+
         public void pauseTimer()
         {
             aTimer.Stop();
             Enabled = false;
         }
+
 
         public void startTimer()
         {
@@ -80,7 +89,7 @@ namespace MicrowaveApplicatie
             Enabled = true;
         }
 
-
+        // Add amount of seconds
         public void Add(int seconds)
         {
             if (Time + seconds <= 5400)
