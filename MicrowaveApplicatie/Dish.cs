@@ -8,15 +8,6 @@ using System.Windows.Controls;
 
 namespace MicrowaveApplicatie 
 {
-    public class DishList : ObservableCollection<Dish>
-    {
-        public DishList() : base()
-        {
-            Add(new Dish("test", "hmm", " test"));
-        }
-    }
-
-
 
 
     public class Dish 

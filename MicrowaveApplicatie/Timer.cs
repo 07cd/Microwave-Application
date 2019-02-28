@@ -6,6 +6,8 @@ namespace MicrowaveApplicatie
     internal class Timer
     {
         private readonly System.Timers.Timer aTimer = new System.Timers.Timer();
+        public bool Enabled;
+        public bool wattState;
 
 
         public Timer(int initialTime)
@@ -17,15 +19,29 @@ namespace MicrowaveApplicatie
 
         public void OnTimedEvent(object source, ElapsedEventArgs e)
         {
+            //Deur dicht
+
             if (Time != 0)
             {
+                //Licht aan
                 Time--;
-                Console.WriteLine(Time);
+                if (!MainWindow.Main.Label.Dispatcher.CheckAccess())
+                {
+                    MainWindow.Main.Label.Dispatcher.Invoke(() =>
+                    {
+                        if (!wattState)
+                        {
+                            MainWindow.Main.Label.Content = TimeString;
+                        }
+                    });
+                }
+              
             }
             else
             {
-                Console.WriteLine(Time);
+                //Licht uit
             }
+          
         }
 
 
@@ -48,19 +64,20 @@ namespace MicrowaveApplicatie
         {
             aTimer.Stop();
             Time = 0;
-            Console.WriteLine(Time);
+            Enabled = false;
+            MainWindow.Main.Label.Content = TimeString;
         }
 
         public void pauseTimer()
         {
             aTimer.Stop();
-            Console.WriteLine(Time);
+            Enabled = false;
         }
 
         public void startTimer()
         {
             aTimer.Start();
-            Console.WriteLine(Time);
+            Enabled = true;
         }
 
 

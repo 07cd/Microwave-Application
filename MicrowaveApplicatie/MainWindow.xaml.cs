@@ -1,11 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Timers;
 using System.Windows;
+using System.Windows.Controls;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
@@ -28,9 +30,7 @@ namespace MicrowaveApplicatie
 
         internal static MainWindow Main;
 
-        
-
-
+        private ObservableCollection<Dish> dish;
 
         public MainWindow()
         {
@@ -38,13 +38,14 @@ namespace MicrowaveApplicatie
             InitializeComponent();
             DataContext = this;
             InitializeComponent();
-            person = new ObservableCollection<Dish>()
+            dish = new ObservableCollection<Dish>()
             {
-
+                new Dish("Koffie", "https://www.kahlua.com/globalassets/images/cocktails/2018/opt/kahluadrinks_wide_coffee1.png", "Test"),
+                new Dish("Burger", "https://frontierburger.com/sites/default/files/styles/large/public/item_photos/2018-07/menuitem-hamburger.png?itok=QZG0Argx", "Test"),
+                new Dish("MicrowaveCeption", "https://thegoodguys.sirv.com/products/50046601/50046601_496424.PNG?scale.height=505&scale.width=773&canvas.height=505&canvas.width=773&canvas.opacity=0&format=png&png.optimize=true","test")
 
             };
-            ComboBox1.ItemsSource = null;
-            //            ComboBox1.ItemsSource = Dish.GetAllPersons();
+            ComboBox1.ItemsSource = dish;
 
 
 
@@ -56,17 +57,24 @@ namespace MicrowaveApplicatie
 
 
 
+        private async Task test()
+        {
+            if (_timer.Enabled)
+            {
+                Label.Content = _watt.currWatt;
+                _timer.wattState = true;
+                await Task.Delay(1000);
+                _timer.wattState = false;
 
-        //        private void test()
-        //        {
-        //            var timer = new DispatcherTimer { Interval = TimeSpan.FromSeconds(2) };
-        //            timer.Start();
-        //            timer.Tick += (sender, args) =>
-        //            {
-        //                timer.Stop();
-        //        
-        //            };
-        //        }
+            }
+            else
+            {
+                Label.Content = _watt.currWatt;
+                await Task.Delay(1000);
+                Label.Content = _timer.TimeString;
+            }
+
+        }
 
 
         private void KeyBindings(object sender, RoutedEventArgs e)
@@ -75,10 +83,14 @@ namespace MicrowaveApplicatie
             {
                 case "System.Windows.Controls.Button: Pause":
                     _timer.pauseTimer();
-                    MessageBox.Show(sender.ToString());
+                    
                     break;
                 case "System.Windows.Controls.Button: Start":
-                    _timer.startTimer();
+                    if (!_microwave.state)
+                    {
+                        _timer.startTimer();
+                    }
+                    
                     //Met een lamp aan + animatie?
                     //Image.Source = new BitmapImage(new Uri(@"Assets/"));
                     
@@ -89,39 +101,38 @@ namespace MicrowaveApplicatie
                     break;
                 case "System.Windows.Controls.Button: Open":
                     _microwave.OpenDoor();
+
+                    _timer.pauseTimer();
+                    
+                    MicrowaveItem.Opacity = 0.8;
                     break;
 
                 case "System.Windows.Controls.Button: Close":
                     _microwave.CloseDoor();
+                    Label.Opacity = 1;
+                    MicrowaveItem.Opacity = 0.3;
                     break;
 
                 case "System.Windows.Controls.Button: >":
-                    if (_watt.index == 4)
-                    {
-                    }
-                    else
+                    if (_watt.index != 4)
                     {
                         _watt.index++;
                     }
 
-                    Label.Content = _watt.currWatt;
-                    //                    int currentWatt = _watt.Wattage[_watt.index];
-                    //            _test();
 
+                    test();
+                    
                     break;
 
                 case "System.Windows.Controls.Button: <":
-                    if (_watt.index == 0)
-                    {
-                    }
-                    else
+                    if (_watt.index != 0)
                     {
                         _watt.index--;
                     }
 
-                    Label.Content = _watt.currWatt;
 
-                    //            _test();
+                    test();
+
 
                     break;
                 case "System.Windows.Controls.Button: +1/2":
@@ -152,42 +163,16 @@ namespace MicrowaveApplicatie
         {
             var image = Url.Text;
             var time = Tijd.Text;
-            var name = TextBox1.Text;
-            ComboBox1.ItemsSource = person;
-            person.Add(new Dish(name, image, time));
-            //            cbItems.Add(new ComboBoxItem {Content = Test.ToString()});
-            //            cbItems.Add(new ComboBoxItem { Content = Test });
-            //
-            //
-            //
-            //            var cbItem = new ComboBoxItem { Content = "<--Select-->" };
-            //            SelectedcbItem = cbItem;
-            //            cbItems.Add(cbItem);
-            //            cbItems.Add(new ComboBoxItem { Content = "Option 1" });
-            //            cbItems.Add(new ComboBoxItem { Content = "Option 2" });
-            //   
+            var name = Name.Text;
+            
+            dish.Add(new Dish(name, image, time));
 
-
-
-
-
-            //            MessageBox.Show($"Image URL: {image} Time: {time} Name: {name}");
-            //            if (TextBox1.Text != "")
-            //            {
-            //                D
-            //
-            //               
-            //                cbItems.Add(new ComboBoxItem());
-            //                
-            //            }
         }
 
 
         private void DeleteButton_OnClick(object sender, RoutedEventArgs e)
         {
-            person.RemoveAt(ComboBox1.SelectedIndex);
-
-            //            ItemsControl.ItemsSourceProperty
+            dish.RemoveAt(ComboBox1.SelectedIndex);
         }
 
         private void SelectFile_OnClick(object sender, RoutedEventArgs e)
@@ -216,31 +201,27 @@ namespace MicrowaveApplicatie
 
         }
 
-
-
-
-
-
-
         private void ComboBox1_OnSelectionChanged(object sender, SelectionChangedEventArgs e)
         {
-            //            var selectedItem = sender as ComboBox;
-            //            string name = selectedItem.SelectedItem.ToString();
-            //            MessageBox.Show(name);
+            InsertButton.IsEnabled = true;
+            DeleteButton.IsEnabled = true;
         }
 
-        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+//        private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
+//        {
+//
+//        }
+
+
+        private void InsertButton_OnClick(object sender, RoutedEventArgs e)
         {
+             Name.Clear();
+             Tijd.Clear();
+             Url.Clear();
 
+             string URL = dish[ComboBox1.SelectedIndex].URL;
+             MicrowaveItem.Source = new BitmapImage(new Uri(URL));           
+             MicrowaveItem.Opacity = 0.3;
         }
-
-
-
-
-
-
-
-
-
     }
 }

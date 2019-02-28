@@ -1,14 +1,45 @@
-﻿using System.Windows;
+﻿using System.Threading;
+using System.Threading.Tasks;
+using System.Windows;
+using System.Windows.Media;
 
 namespace MicrowaveApplicatie
 {
     internal class Microwave
     {
+        public bool state;
+       
+
+        async void Blink(bool test)
+        {
+            while (state)
+            {
+
+                await Task.Delay(500);
+
+                if (MainWindow.Main.Label.Foreground.Opacity == 0)
+                {
+                    MainWindow.Main.Label.Foreground.Opacity = 1;
+                }
+                else
+                {
+                    MainWindow.Main.Label.Foreground.Opacity = 0;
+
+                }
+
+                
+            }
+            
+        }
 
         public void OpenDoor()
         {
+            state = true;
+        
+
             MainWindow.Main.MediaPlayerClose.Close();
-            MainWindow.Main.Label.Content = "OPEN";
+            
+            Blink(true);
             MainWindow.Main.DoorButton.Content = "Close";
             MainWindow.Main.MediaPlayerOpen.Visibility = Visibility.Visible;
             MainWindow.Main.MediaPlayerClose.Visibility = Visibility.Hidden;
@@ -17,12 +48,15 @@ namespace MicrowaveApplicatie
 
         public void CloseDoor()
         {
+            Blink(true);
+            state = false;
             MainWindow.Main.MediaPlayerOpen.Close();
             MainWindow.Main.MediaPlayerOpen.Visibility = Visibility.Hidden;
             MainWindow.Main.MediaPlayerClose.Visibility = Visibility.Visible;
             MainWindow.Main.MediaPlayerClose.Play();
             MainWindow.Main.DoorButton.Content = "Open";
-            MainWindow.Main.Label.Content = "00:00";
+            
+            
         }
     }
 }
