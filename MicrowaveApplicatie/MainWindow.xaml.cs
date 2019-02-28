@@ -82,7 +82,7 @@ namespace MicrowaveApplicatie
                     
                     break;
                 case "System.Windows.Controls.Button: Start":
-                    if (!_microwave.state)
+                    if (!_microwave.State)
                     {
                         _timer.startTimer();
                     }
